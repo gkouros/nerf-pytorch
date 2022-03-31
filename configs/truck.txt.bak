@@ -1,7 +1,7 @@
 expname = truck_test
 basedir = ./logs
-datadir = ./data/truck
-dataset_type = llff
+datadir = ./data/tanks_and_temples/tat_training_Truck
+dataset_type = tat
 
 factor = 8
 llffhold = 8
