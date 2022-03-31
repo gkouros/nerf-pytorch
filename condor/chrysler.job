@@ -13,9 +13,9 @@ Arguments = $(Cluster)
 
 NiceUser = true
 
-Log    =  ../logs/truck_test/exp.$(Cluster).log
-Output =  ../logs/truck_test/exp.$(Cluster).out
-Error  =  ../logs/truck_test/exp.$(Cluster).err
+Log    =  ../logs/chrysler_test/exp.$(Cluster).log
+Output =  ../logs/chrysler_test/exp.$(Cluster).out
+Error  =  ../logs/chrysler_test/exp.$(Cluster).err
 
 Notification = Complete
 Queue 1
