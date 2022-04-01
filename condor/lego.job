@@ -13,9 +13,9 @@ Arguments = lego
 
 NiceUser = true
 
-Log    =  ../logs/lego_test/$(Cluster).log
-Output =  ../logs/lego_test/$(Cluster).out
-Error  =  ../logs/lego_test/$(Cluster).err
+Log    =  ../logs/lego_test/exp.$(Cluster).log
+Output =  ../logs/lego_test/exp.$(Cluster).out
+Error  =  ../logs/lego_test/exp.$(Cluster).err
 
 Notification = Complete
 Queue 1

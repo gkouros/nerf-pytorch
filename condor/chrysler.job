@@ -13,9 +13,9 @@ Arguments = chrysler
 
 NiceUser = true
 
-Log    =  ../logs/chrysler_test/$(Cluster).log
-Output =  ../logs/chrysler_test/$(Cluster).out
-Error  =  ../logs/chrysler_test/$(Cluster).err
+Log    =  ../logs/chrysler_test/exp.$(Cluster).log
+Output =  ../logs/chrysler_test/exp.$(Cluster).out
+Error  =  ../logs/chrysler_test/exp.$(Cluster).err
 
 Notification = Complete
 Queue 1
