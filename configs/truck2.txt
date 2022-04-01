@@ -3,7 +3,7 @@ basedir = ./logs
 datadir = ./data/tanks_and_temples/tat_training_Truck
 dataset_type = tat
 
-factor = 8
+factor = 2
 llffhold = 8
 
 N_rand = 1024
@@ -12,3 +12,5 @@ N_importance = 64
 
 use_viewdirs = True
 raw_noise_std = 1e0
+
+spherify = True
