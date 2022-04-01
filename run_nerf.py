@@ -432,6 +432,8 @@ def config_parser():
                         help='input data directory')
 
     # training options
+    parser.add_argument("--num_iters", type=int, default=200000,
+                        help='Number of iterations to train')
     parser.add_argument("--netdepth", type=int, default=8,
                         help='layers in network')
     parser.add_argument("--netwidth", type=int, default=256,
@@ -710,7 +712,7 @@ def train():
         rays_rgb = torch.Tensor(rays_rgb).to(device)
 
 
-    N_iters = 200000 + 1
+    N_iters = args.num_iters + 1
     print('Begin')
     print('TRAIN views are', i_train)
     print('TEST views are', i_test)
