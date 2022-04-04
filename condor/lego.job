@@ -1,11 +1,11 @@
 Universe = vanilla
 
-RequestCpus = 2
+RequestCpus = 8
 Request_GPUs = 1
-RequestMemory = 4Gb
-+RequestWalltime = 259000
+RequestMemory = 16Gb
++RequestWalltime = 86400
 
-Requirements = (CUDACapability >= 3.5)&&(CUDAGlobalMemoryMb >= 10000.0)&&(machine != "andromeda.esat.kuleuven.be")
+Requirements = (CUDACapability >= 3.5)&&(CUDAGlobalMemoryMb >= 8000.0)&&(machine != "andromeda.esat.kuleuven.be")
 
 Initialdir = /users/visics/gkouros/projects/nerf-repos/nerf-pytorch/condor
 Executable = /users/visics/gkouros/projects/nerf-repos/nerf-pytorch/condor/run_nerf_job.sh
