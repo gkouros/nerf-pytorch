@@ -1,6 +1,6 @@
-expname = chrysler_test
+expname = chrysler_360_test
 basedir = ./logs
-datadir = ./data/chrysler
+datadir = ./data/chrysler_360
 dataset_type = llff
 
 factor = 8
