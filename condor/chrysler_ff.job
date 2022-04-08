@@ -5,7 +5,7 @@ Request_GPUs = 1
 RequestMemory = 8Gb
 +RequestWalltime = 172800
 
-Requirements = (CUDACapability >= 3.5)&&(CUDAGlobalMemoryMb >= 8000.0)&&(machine != "andromeda.esat.kuleuven.be")&&(machine != "z8-demo.esat.kuleuven.be")&&(machine != "fig.esat.kuleuven.be")&&(machine != "grape.esat.kuleuven.be")&&(machine != "hawberry.esat.kuleuven.be")
+Requirements = (CUDACapability >= 3.5)&&(CUDAGlobalMemoryMb >= 8000.0)&&(machine != "andromeda.esat.kuleuven.be")&&(machine != "z8-demo.esat.kuleuven.be")&&(machine != "fig.esat.kuleuven.be")&&(machine != "grape.esat.kuleuven.be")&&(machine != "hawberry.esat.kuleuven.be")&&(machine != "etrog.esat.kuleuven.be")
 
 Initialdir = /users/visics/gkouros/projects/nerf-repos/nerf-pytorch/condor
 Executable = /users/visics/gkouros/projects/nerf-repos/nerf-pytorch/condor/run_nerf_job.sh
