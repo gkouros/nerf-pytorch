@@ -1,9 +1,9 @@
-expname = chrysler_test
+expname = renault_test
 basedir = ./logs
 datadir = ./data/renault
 dataset_type = llff
 
-factor = 8
+factor = 4
 llffhold = 8
 
 N_rand = 1024
