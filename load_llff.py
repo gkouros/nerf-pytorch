@@ -23,7 +23,7 @@ def _minify(basedir, factors=[], resolutions=[]):
 
     imgdir = os.path.join(basedir, 'images')
     imgs = [os.path.join(imgdir, f) for f in sorted(os.listdir(imgdir))]
-    imgs = [f for f in imgs if any([f.endswith(ex) for ex in ['JPG', 'jpg', 'png', 'jpeg', 'PNG']])]
+    imgs = [f for f in imgs if any([f.endswith(ex) for ex in ['JPG', 'jpg', 'png', 'jpeg', 'PNG', 'JPEG']])]
     imgdir_orig = imgdir
 
     wd = os.getcwd()
@@ -66,7 +66,7 @@ def _load_data(basedir, factor=None, width=None, height=None, load_imgs=True):
     bds = poses_arr[:, -2:].transpose([1,0])
 
     img0 = [os.path.join(basedir, 'images', f) for f in sorted(os.listdir(os.path.join(basedir, 'images'))) \
-            if f.endswith('JPG') or f.endswith('jpg') or f.endswith('png') or f.endswith('JPEG') ][0]
+            if f.endswith('JPG') or f.endswith('jpg') or f.endswith('png') or f.endswith('JPEG')][0]
     sh = imageio.imread(img0).shape
 
     sfx = ''
@@ -93,7 +93,7 @@ def _load_data(basedir, factor=None, width=None, height=None, load_imgs=True):
         print( imgdir, 'does not exist, returning' )
         return
 
-    imgfiles = [os.path.join(imgdir, f) for f in sorted(os.listdir(imgdir)) if f.endswith('JPG') or f.endswith('jpg') or f.endswith('png')]
+    imgfiles = [os.path.join(imgdir, f) for f in sorted(os.listdir(imgdir)) if f.endswith('JPG') or f.endswith('jpg') or f.endswith('png') or f.endswith('JPEG')]
     if poses.shape[-1] != len(imgfiles):
         print( 'Mismatch between imgs {} and poses {} !!!!'.format(len(imgfiles), poses.shape[-1]) )
         return
