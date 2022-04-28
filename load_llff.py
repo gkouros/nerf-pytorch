@@ -1,5 +1,6 @@
 import numpy as np
 import os, imageio
+import torch
 
 
 ########## Slightly modified version of LLFF data loading code
@@ -213,6 +214,30 @@ def recenter_poses(poses):
 #####################
 
 
+trans_t = lambda t : np.array([
+    [1,0,0,0],
+    [0,1,0,0],
+    [0,0,1,t],
+    [0,0,0,1]], dtype=np.float32)
+
+rot_phi = lambda phi : np.array([
+    [1,0,0,0],
+    [0,np.cos(phi),-np.sin(phi),0],
+    [0,np.sin(phi), np.cos(phi),0],
+    [0,0,0,1]], dtype=np.float32)
+
+rot_psi = lambda phi : np.array([
+    [np.cos(phi), -np.sin(phi) ,0,0],
+    [np.sin(phi), np.cos(phi), 0, 0],
+    [0, 0, 1 ,0],
+    [0,0,0,1]], dtype=np.float32)
+
+rot_theta = lambda th : np.array([
+    [np.cos(th),0,-np.sin(th),0],
+    [0,1,0,0],
+    [np.sin(th),0, np.cos(th),0],
+    [0,0,0,1]], dtype=np.float32)
+
 def spherify_poses(poses, bds):
     """  """
     p34_to_44 = lambda p : np.concatenate([p, np.tile(np.reshape(np.eye(4)[-1,:], [1,1,4]), [p.shape[0], 1,1])], 1)
@@ -228,11 +253,16 @@ def spherify_poses(poses, bds):
         return pt_mindist
 
     pt_mindist = min_line_dist(rays_o, rays_d)
-
     center = pt_mindist
 
     # get up vector of world center
-    up = (poses[:,:3,3] - center).mean(0)
+    svd = np.linalg.svd((poses[:, :3, 3] - center).T)
+    if np.std(svd[1]) < 8:
+        print('Up vector estimation using averaging of camera vectors')
+        up = (poses[:,:3,3] - center).mean(0)
+    else:
+        print('Up vector estimation using plane normal')
+        up = svd[0][:, -1]
 
     # determine transform from scene center to world frame
     vec0 = normalize(up)
@@ -259,7 +289,7 @@ def spherify_poses(poses, bds):
     radcircle = np.sqrt(rad**2-zh**2)
     new_poses = []
 
-    for th in np.linspace(0.,2.*np.pi, 120):
+    for th in np.linspace(0.,2.*np.pi, 360):
 
         camorigin = np.array([radcircle * np.cos(th), radcircle * np.sin(th), zh])
         up = np.array([0,0,-1.])
@@ -269,7 +299,11 @@ def spherify_poses(poses, bds):
         vec1 = normalize(np.cross(vec2, vec0))
         pos = camorigin
         p = np.stack([vec0, vec1, vec2, pos], 1)
-
+        ########################## FIXING RENDERED POSES
+        # p = rot_phi(-0.5)[:3, :3] @ p
+        # p = rot_psi(0.5)[:3, :3] @ p
+        # p = rot_theta(1.0)[:3, :3] @ p
+        ##########################
         new_poses.append(p)
 
     new_poses = np.stack(new_poses, 0)
