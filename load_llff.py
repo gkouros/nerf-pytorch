@@ -175,8 +175,6 @@ def poses_avg(poses):
     c2w = np.concatenate([viewmatrix(vec2, up, center), hwf], 1)
     return c2w
 
-
-
 def render_path_spiral(c2w, up, rads, focal, zdelta, zrate, rots, N):
     """ Generate poses for spiral path """
 
@@ -189,12 +187,6 @@ def render_path_spiral(c2w, up, rads, focal, zdelta, zrate, rots, N):
         z = normalize(c - np.dot(c2w[:3,:4], np.array([0,0,-focal, 1.])))
         render_poses.append(np.concatenate([viewmatrix(z, up, c), hwf], 1))
     return render_poses
-<<<<<<< HEAD
-
-=======
->>>>>>> Add some documentation
-
-
 
 def recenter_poses(poses):
     """ Recenter poses with respect to average pose """
@@ -212,8 +204,6 @@ def recenter_poses(poses):
 
 
 #####################
-
-
 trans_t = lambda t : np.array([
     [1,0,0,0],
     [0,1,0,0],
@@ -299,11 +289,6 @@ def spherify_poses(poses, bds):
         vec1 = normalize(np.cross(vec2, vec0))
         pos = camorigin
         p = np.stack([vec0, vec1, vec2, pos], 1)
-        ########################## FIXING RENDERED POSES
-        # p = rot_phi(-0.5)[:3, :3] @ p
-        # p = rot_psi(0.5)[:3, :3] @ p
-        # p = rot_theta(1.0)[:3, :3] @ p
-        ##########################
         new_poses.append(p)
 
     new_poses = np.stack(new_poses, 0)
