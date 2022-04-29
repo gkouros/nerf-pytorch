@@ -517,6 +517,8 @@ def config_parser():
                         help='set for spherical 360 scenes')
     parser.add_argument("--llffhold", type=int, default=8,
                         help='will take every 1/N images as LLFF test set, paper uses 8')
+    parser.add_argument("--mask_imgs", action='store_true',
+                        help='will mask the input imgs if the masks exist')
 
     # logging/saving options
     parser.add_argument("--i_print",   type=int, default=100,
@@ -543,7 +545,8 @@ def train():
     if args.dataset_type == 'llff':
         images, poses, bds, render_poses, i_test = load_llff_data(args.datadir, args.factor,
                                                                   recenter=True, bd_factor=.75,
-                                                                  spherify=args.spherify)
+                                                                  spherify=args.spherify,
+                                                                  mask_imgs=args.mask_imgs)
         hwf = poses[0,:3,-1]
         poses = poses[:,:3,:4]
         print('Loaded llff', images.shape, render_poses.shape, hwf, args.datadir)
