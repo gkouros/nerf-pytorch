@@ -1,7 +1,7 @@
 import numpy as np
 import os, imageio
 import torch
-
+import cv2
 
 ########## Slightly modified version of LLFF data loading code
 ##########  see https://github.com/Fyusion/LLFF for original
@@ -126,17 +126,35 @@ def _load_data(basedir, factor=None, width=None, height=None, load_imgs=True, ma
     if not load_imgs:
         return poses, bds
 
+    if mask_imgs:
+        mask_dir = os.path.join(basedir, 'masks')
+        mask_suffix = os.listdir(mask_dir)[0].split('/')[-1].split('.')[-1]
+        img_suffix = imgfiles[0].split('/')[-1].split('.')[-1]
+
     def imread(f):
         img = imageio.imread(f, ignoregamma=f.endswith('png'))
         if mask_imgs:
-            mask = np.expand_dims(imageio.imread(f.replace('images' + sfx, 'masks')), axis=2)
-            if mask.shape[:2] != img.shape[:2]:
-                mask = cv2.resize(mask, img.shape[:2:-1])
-            img = np.concatenate(img, mask, axis=2)
+            # path = os.path.join(f.split('/')[:-1])
+            # name = f.split('/')[-1].split('.')
+            # prefix = name[0]
+            # suffix = name[1]
+            mask_path = f.replace('images' + sfx, 'masks').replace(img_suffix, mask_suffix)
+            mask = cv2.resize(imageio.imread(mask_path), img.shape[:2][::-1])
+            mask = np.expand_dims(mask, axis=2)
+            img = cv2.bitwise_and(img, img, mask=mask)
+            img = np.concatenate((img, mask), axis=2)
+            # print(img.shape)
         return img
 
-    imgs = imgs = [imread(f)[...,:3]/255. for f in imgfiles]
+    # imgs = imgs = [imread(f)[...,:3]/255. for f in imgfiles]
+    imgs = imgs = [imread(f)/255. for f in imgfiles]
     imgs = np.stack(imgs, -1)
+
+    # from matplotlib import pyplot as plt
+    # print(imgs[0].shape)
+    # plt.imshow(imgs[0])
+    # plt.show()
+    # asda
 
     print('Loaded image data', imgs.shape, poses[:,-1,0])
     return poses, bds, imgs
@@ -302,7 +320,7 @@ def spherify_poses(poses, bds):
     return poses_reset, new_poses, bds
 
 
-def load_llff_data(basedir, factor=8, recenter=True, bd_factor=.75, spherify=False, path_zflat=False, mask_imgs):
+def load_llff_data(basedir, factor=8, recenter=True, bd_factor=.75, spherify=False, path_zflat=False, mask_imgs=False):
     """ Load data according to LLFF format for forward facing or 360 scenes """
 
     # get poses, near-far bounds, and images
