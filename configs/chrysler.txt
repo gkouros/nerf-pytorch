@@ -1,4 +1,4 @@
-expname = chrysler_test
+expname = chrysler
 basedir = ./logs
 datadir = ./data/chrysler
 dataset_type = llff

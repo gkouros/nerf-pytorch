@@ -1,4 +1,4 @@
-expname = tesla_test
+expname = tesla
 basedir = ./logs
 datadir = ./data/tesla
 dataset_type = llff
