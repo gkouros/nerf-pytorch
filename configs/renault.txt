@@ -16,3 +16,4 @@ raw_noise_std = 1e0
 spherify = True
 no_ndc = True
 lindisp = True
+mask_imgs = False
