@@ -9,13 +9,13 @@ Requirements = (CUDACapability >= 3.5)&&(CUDAGlobalMemoryMb >= 8000.0)&&(machine
 
 Initialdir = /users/visics/gkouros/projects/nerf-repos/nerf-pytorch/condor
 Executable = /users/visics/gkouros/projects/nerf-repos/nerf-pytorch/condor/run_nerf_job.sh
-Arguments = chrysler_360
+Arguments = chrysler_360 $(Cluster)
 
 NiceUser = false
 
-Log    =  ../logs/chrysler_360_test/exp.$(Cluster).log
-Output =  ../logs/chrysler_360_test/exp.$(Cluster).out
-Error  =  ../logs/chrysler_360_test/exp.$(Cluster).err
+Log    =  ../logs/chrysler_360/exp.$(Cluster).log
+Output =  ../logs/chrysler_360/exp.$(Cluster).out
+Error  =  ../logs/chrysler_360/exp.$(Cluster).err
 
 Notification = Complete
 Queue 1
