@@ -3,7 +3,7 @@ basedir = ./logs
 datadir = ./data/tesla
 dataset_type = llff
 
-factor = 4
+factor = 8
 llffhold = 8
 
 N_rand = 1024
