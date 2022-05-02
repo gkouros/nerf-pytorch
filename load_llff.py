@@ -134,27 +134,16 @@ def _load_data(basedir, factor=None, width=None, height=None, load_imgs=True, ma
     def imread(f):
         img = imageio.imread(f, ignoregamma=f.endswith('png'))
         if mask_imgs:
-            # path = os.path.join(f.split('/')[:-1])
-            # name = f.split('/')[-1].split('.')
-            # prefix = name[0]
-            # suffix = name[1]
             mask_path = f.replace('images' + sfx, 'masks').replace(img_suffix, mask_suffix)
             mask = cv2.resize(imageio.imread(mask_path), img.shape[:2][::-1])
             mask = np.expand_dims(mask, axis=2)
             img = cv2.bitwise_and(img, img, mask=mask)
             img = np.concatenate((img, mask), axis=2)
-            # print(img.shape)
         return img
 
-    # imgs = imgs = [imread(f)[...,:3]/255. for f in imgfiles]
-    imgs = imgs = [imread(f)/255. for f in imgfiles]
+    # imgs = [imread(f)[...,:3]/255. for f in imgfiles]
+    imgs = [imread(f)/255. for f in imgfiles]  # include alpha channel
     imgs = np.stack(imgs, -1)
-
-    # from matplotlib import pyplot as plt
-    # print(imgs[0].shape)
-    # plt.imshow(imgs[0])
-    # plt.show()
-    # asda
 
     print('Loaded image data', imgs.shape, poses[:,-1,0])
     return poses, bds, imgs

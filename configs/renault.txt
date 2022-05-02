@@ -6,14 +6,15 @@ dataset_type = llff
 factor = 4
 llffhold = 8
 
-N_rand = 1024
-N_samples = 64
-N_importance = 64
+N_rand = 256
+N_samples = 32
+N_importance = 32
 
 use_viewdirs = True
 raw_noise_std = 1e0
+white_bkgd = True
 
 spherify = True
 no_ndc = True
 lindisp = True
-mask_imgs = False
+mask_imgs = True
