@@ -1,5 +1,6 @@
 import numpy as np
-import os, imageio
+import os
+import imageio
 import torch
 import cv2
 
@@ -132,7 +133,11 @@ def _load_data(basedir, factor=None, width=None, height=None, load_imgs=True, ma
         img_suffix = imgfiles[0].split('/')[-1].split('.')[-1]
 
     def imread(f):
-        img = imageio.imread(f, ignoregamma=f.endswith('png'))
+        if f.endswith('png'):
+            return imageio.imread(f, ignoregamma=True)
+        else:
+            return imageio.imread(f)
+
         if mask_imgs:
             mask_path = f.replace('images' + sfx, 'masks').replace(img_suffix, mask_suffix)
             mask = cv2.resize(imageio.imread(mask_path), img.shape[:2][::-1])
