@@ -134,9 +134,9 @@ def _load_data(basedir, factor=None, width=None, height=None, load_imgs=True, ma
 
     def imread(f):
         if f.endswith('png'):
-            return imageio.imread(f, ignoregamma=True)
+            img = imageio.imread(f, ignoregamma=True)
         else:
-            return imageio.imread(f)
+            img = imageio.imread(f)
 
         if mask_imgs:
             mask_path = f.replace('images' + sfx, 'masks').replace(img_suffix, mask_suffix)
@@ -144,6 +144,7 @@ def _load_data(basedir, factor=None, width=None, height=None, load_imgs=True, ma
             mask = np.expand_dims(mask, axis=2)
             img = cv2.bitwise_and(img, img, mask=mask)
             img = np.concatenate((img, mask), axis=2)
+
         return img
 
     # imgs = [imread(f)[...,:3]/255. for f in imgfiles]
