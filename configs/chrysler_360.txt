@@ -12,8 +12,9 @@ N_importance = 128
 
 use_viewdirs = True
 raw_noise_std = 1e0
+white_bkgd = True
 
 spherify = True
 no_ndc = True
 lindisp = True
-mask_imgs = False
+mask_imgs = True
