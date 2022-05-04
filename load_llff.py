@@ -140,9 +140,8 @@ def _load_data(basedir, factor=None, width=None, height=None, load_imgs=True, ma
 
         if mask_imgs:
             mask_path = f.replace('images' + sfx, 'masks').replace(img_suffix, mask_suffix)
-            mask = cv2.resize(imageio.imread(mask_path), img.shape[:2][::-1])
+            mask = cv2.resize(cv2.imread(mask_path, 0), img.shape[:2][::-1])
             mask = np.expand_dims(mask, axis=2)
-            img = cv2.bitwise_and(img, img, mask=mask)
             img = np.concatenate((img, mask), axis=2)
 
         return img
