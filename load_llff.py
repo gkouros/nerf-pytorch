@@ -263,7 +263,8 @@ def spherify_poses(poses, bds):
 
     # get up vector of world center
     svd = np.linalg.svd((poses[:, :3, 3] - center).T)
-    if np.std(svd[1]) < 8:
+    eigvals = svd[1]
+    if max(eigvals[:2]) < 2 * eigvals[2]:
         print('Up vector estimation using averaging of camera vectors')
         up = (poses[:,:3,3] - center).mean(0)
     else:
