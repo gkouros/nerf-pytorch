@@ -828,6 +828,7 @@ def train():
             print('Done, saving', rgbs.shape, disps.shape)
             moviebase = os.path.join(basedir, expname, 'spiral_{:06d}_'.format(i))
             imageio.mimwrite(moviebase + 'rgb.mp4', to8b(rgbs), fps=30, quality=8)
+            disps = (disps - disps.min()) / (disps.max() - disps.min())
             imageio.mimwrite(moviebase + 'disp.mp4', to8b(disps / np.max(disps)), fps=30, quality=8)
 
             # if args.use_viewdirs:
