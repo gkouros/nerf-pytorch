@@ -629,6 +629,9 @@ def train():
         print('Unknown dataset type', args.dataset_type, 'exiting')
         return
 
+    # add artificial noise to poses to investigate the effect of suboptimal poses
+    poses += args.pose_noise_mag * np.random.normal(size=poses.shape)
+
     # Cast intrinsics to right types
     H, W, focal = hwf
     H, W = int(H), int(W)
