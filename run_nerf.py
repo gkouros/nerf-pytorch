@@ -296,7 +296,8 @@ def raw2outputs(raw, z_vals, rays_d, raw_noise_std=0, white_bkgd=False, pytest=F
     rgb_map = torch.sum(weights[...,None] * rgb, -2)  # [N_rays, 3]
 
     depth_map = torch.sum(weights * z_vals, -1)
-    disp_map = 1./torch.max(1e-10 * torch.ones_like(depth_map), depth_map / torch.sum(weights, -1))
+    disp_map = 1./torch.max(1e-10 * torch.ones_like(depth_map),
+            torch.nan_to_num(depth_map / torch.sum(weights, -1), nan=0.0))
     acc_map = torch.sum(weights, -1)
 
     if white_bkgd:
@@ -828,10 +829,13 @@ def train():
             # Turn on testing mode
             with torch.no_grad():
                 rgbs, disps = render_path(render_poses, hwf, K, args.chunk, render_kwargs_test)
+
+            #  print(disps.max(), disps.min(), disps.mean())
+            #  asda
             print('Done, saving', rgbs.shape, disps.shape)
             moviebase = os.path.join(basedir, expname, 'spiral_{:06d}_'.format(i))
             imageio.mimwrite(moviebase + 'rgb.mp4', to8b(rgbs), fps=30, quality=8)
-            disps = (disps - disps.min()) / (disps.max() - disps.min())
+            #  disps = (disps - disps.min()) / (disps.max() - disps.min())
             imageio.mimwrite(moviebase + 'disp.mp4', to8b(disps / np.max(disps)), fps=30, quality=8)
 
             # if args.use_viewdirs:
