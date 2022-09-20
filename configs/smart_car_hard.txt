@@ -18,4 +18,4 @@ precrop_frac = 0.5
 
 half_res = False
 
-pose_noise_mag = 0.001
+pose_noise_mag = 0.0
